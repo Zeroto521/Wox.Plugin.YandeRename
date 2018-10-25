@@ -5,10 +5,6 @@ import pyperclip
 
 from wox import Wox, WoxAPI
 
-"""Example yande.re pictures
-1. yande.re%20425267%2047agdragon%20cleavage%20dress%20no_bra%20pointy_ears%20sword
-2. yande.re 20425267 2047agdragon 20cleavage 20dress 20no_bra 20pointy_ears 20sword
-"""
 
 PATH = r'C:\Users\Zero\Pictures\舔图猫'
 
