@@ -1,0 +1,12 @@
+{
+    "ID": "636dc99288364816bec73b38f807f45c",
+    "ActionKeyword": "rename",
+    "Name": "YandeRename",
+    "Description": "Auto rename yande.re's pictures.",
+    "Author": "Zeroto521",
+    "Version": "0.0.1",
+    "Language": "python",
+    "Website": "",
+    "IcoPath": "Images\\favicon.ico",
+    "ExecuteFileName": "yandeRename.py"
+}
