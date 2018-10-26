@@ -22,7 +22,7 @@ Auto rename yande.re's pictures by its id in yande.
 4. Open the **yandeRename.py** file.
 5. Find the `PATH` and change it which you want to rename.
 
-## Rely
+## Requirements
 
 1. `Python3.x`
 2. `pyperclip`
