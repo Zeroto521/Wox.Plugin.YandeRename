@@ -115,6 +115,7 @@ class Main(Wox):
 
     def openFolder(self, path):
         os.startfile(path)
+        WoxAPI.change_query(path)
 
 
 if __name__ == '__main__':
