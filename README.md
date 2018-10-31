@@ -1,6 +1,6 @@
 # Wox.Plugin.YandeRename
 
-Auto rename yande.re's pictures by its id in yande.
+Auto rename yande.re's pictures by its **id** in yande.
 
 ![screenshots](/Images/zero_20181025_230948.png)
 
