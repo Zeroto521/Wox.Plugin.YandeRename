@@ -1,12 +1,14 @@
+# -*- coding: utf-8 -*-
+
 import copy
 import os
+from getpass import getuser
 
 import pyperclip
-
 from wox import Wox, WoxAPI
 
-
-PATH = r'C:\Users\Zero\Pictures\舔图猫'
+username = getuser()
+PATH = r'C:\Users\{}\Pictures\舔图猫'.format(username)
 
 RESULT_TEMPLATE = {
     'Title': '',
