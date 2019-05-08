@@ -5,10 +5,11 @@ import os
 from getpass import getuser
 
 import pyperclip
+
 from wox import Wox, WoxAPI
 
-username = getuser()
-PATH = r'C:\Users\{}\Pictures\舔图猫'.format(username)
+USERNAME = getuser()
+PATH = r'C:\Users\{}\Pictures\舔图猫'.format(USERNAME)
 
 RESULT_TEMPLATE = {
     'Title': '',
@@ -22,6 +23,9 @@ ACTION_TEMPLATE = {
         'parameters': [],
     }
 }
+
+FLAGS = ['yande.re', 'original']
+EXTENDS = [".png", '.jpg', '.jpeg', '.gif']
 
 
 class Main(Wox):
@@ -43,29 +47,36 @@ class Main(Wox):
 
         counter = 0
         for pic in os.listdir():
-            try:
-                name, extend = os.path.splitext(pic)
-                if extend in [".png", '.jpg', '.jpeg']:
-                    mark = ' ' if ' ' in name else '%'
-                    name_list = name.split(mark)
-                    if name_list[0] == 'yande.re':
-                        # use yande.re's "id + extend" to rename
-                        realname = name_list[1] + extend
-                        os.rename(pic, realname)  # rename it
+            name, extend = os.path.splitext(pic)
+            if extend in EXTENDS:
+                if any([flag in name for flag in FLAGS]):
+                    if 'yande.re' in name:
+                        mark = ' ' if ' ' in name else '%'
+                        # use yande.re's "id to replace raw name
+                        realname = name.split(mark)[1]
 
+                    if 'original' in name:
+                        # use yande.re's "id to replace raw name
+                        realname = name.split('-')[0]
+
+                    realname += extend
+
+                    if not os.path.exists(realname):
+                        os.rename(pic, realname)  # rename it
                         counter += 1  # to count how many pictures
-            except:
-                # void the same picture problem.
-                title = 'Error: {}'.format(name)
-                subtitle = 'Click to copy picture name to clipboard.'
-                method = 'copy2clipboard'
-                result.append(self.genaction(title, subtitle, method, name))
-                continue
-        else:
-            title = "{} pictures have renamed.".format(counter)
-            subtitle = 'Click to open the folder in window.'
-            method = 'openFolder'
-            result.insert(0, self.genaction(title, subtitle, method, PATH))
+
+                    else:
+                        title = 'Failed to rename {}, please to check out the picture in local folder.'.format(
+                            realname)
+                        subtitle = 'Click to copy picture name to clipboard.'
+                        method = 'copy2clipboard'
+                        result.append(
+                            self.genaction(title, subtitle, method, name))
+
+        title = "{} pictures have renamed.".format(counter)
+        subtitle = 'Click to open the folder in window.'
+        method = 'openFolder'
+        result.insert(0, self.genaction(title, subtitle, method, PATH))
 
         return result
 
