@@ -26,3 +26,4 @@ Auto rename yande.re's pictures by its **id** in yande.
 
 1. `Python3.x`
 2. `pyperclip`
+3. `send2trash`

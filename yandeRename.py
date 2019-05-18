@@ -3,8 +3,10 @@
 import copy
 import os
 from getpass import getuser
+from hashlib import md5
 
 import pyperclip
+from send2trash import send2trash
 
 from wox import Wox, WoxAPI
 
@@ -64,7 +66,8 @@ class Main(Wox):
                     if not os.path.exists(realname):
                         os.rename(pic, realname)  # rename it
                         counter += 1  # to count how many pictures
-
+                    elif self.getMD5(realname) == self.getMD5(pic):
+                        send2trash(pic)
                     else:
                         title = 'Failed to rename {}, please to check out the picture in local folder.'.format(
                             realname)
@@ -129,6 +132,11 @@ class Main(Wox):
     def openFolder(self, path):
         os.startfile(path)
         WoxAPI.change_query(path)
+
+    def getMD5(self, file):
+        with open(file, 'rb') as f:
+            m = md5(f.read())
+        return m.hexdigest()
 
 
 if __name__ == '__main__':

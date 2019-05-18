@@ -4,7 +4,7 @@
     "Name": "YandeRename",
     "Description": "Auto rename yande.re's pictures.",
     "Author": "Zeroto521",
-    "Version": "0.0.2",
+    "Version": "0.0.3",
     "Language": "python",
     "Website": "https://github.com/Zeroto521/Wox.Plugin.YandeRename",
     "IcoPath": "Images\\favicon.ico",
