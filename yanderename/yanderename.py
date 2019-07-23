@@ -2,7 +2,6 @@
 
 import copy
 import os
-from getpass import getuser
 from hashlib import md5
 
 import pyperclip
@@ -10,24 +9,7 @@ from send2trash import send2trash
 
 from wox import Wox, WoxAPI
 
-USERNAME = getuser()
-PATH = r'C:\Users\{}\Pictures\舔图猫'.format(USERNAME)
-
-RESULT_TEMPLATE = {
-    'Title': '',
-    'SubTitle': '',
-    'IcoPath': 'Images/favicon.ico',
-}
-
-ACTION_TEMPLATE = {
-    'JsonRPCAction': {
-        'method': '',
-        'parameters': [],
-    }
-}
-
-FLAGS = ['yande.re', 'original']
-EXTENDS = [".png", '.jpg', '.jpeg', '.gif']
+from .constants import *
 
 
 class Main(Wox):
@@ -50,31 +32,30 @@ class Main(Wox):
         counter = 0
         for pic in os.listdir():
             name, extend = os.path.splitext(pic)
-            if extend in EXTENDS:
-                if any([flag in name for flag in FLAGS]):
-                    if 'yande.re' in name:
-                        mark = ' ' if ' ' in name else '%'
-                        # use yande.re's "id to replace raw name
-                        realname = name.split(mark)[1]
+            if extend in EXTENDS and any([flag in name for flag in FLAGS]):
+                if 'yande.re' in name:
+                    mark = ' ' if ' ' in name else '%'
+                    # use yande.re's "id to replace raw name
+                    realname = name.split(mark)[1]
 
-                    if 'original' in name:
-                        # use yande.re's "id to replace raw name
-                        realname = name.split('-')[0]
+                if 'original' in name:
+                    # use yande.re's "id to replace raw name
+                    realname = name.split('-')[0]
 
-                    realname += extend
+                realname += extend
 
-                    if not os.path.exists(realname):
-                        os.rename(pic, realname)  # rename it
-                        counter += 1  # to count how many pictures
-                    elif self.getMD5(realname) == self.getMD5(pic):
-                        send2trash(pic)
-                    else:
-                        title = 'Failed to rename {}, please to check out the picture in local folder.'.format(
-                            realname)
-                        subtitle = 'Click to copy picture name to clipboard.'
-                        method = 'copy2clipboard'
-                        result.append(
-                            self.genaction(title, subtitle, method, name))
+                if not os.path.exists(realname):
+                    os.rename(pic, realname)  # rename it
+                    counter += 1  # to count how many pictures
+                elif self.getMD5(realname) == self.getMD5(pic):
+                    send2trash(pic)
+                else:
+                    title = 'Failed to rename {}, please to check out the picture in local folder.'.format(
+                        realname)
+                    subtitle = 'Click to copy picture name to clipboard.'
+                    method = 'copy2clipboard'
+                    result.append(
+                        self.genaction(title, subtitle, method, name))
 
         title = "{} pictures have renamed.".format(counter)
         subtitle = 'Click to open the folder in window.'
@@ -137,7 +118,3 @@ class Main(Wox):
         with open(file, 'rb') as f:
             m = md5(f.read())
         return m.hexdigest()
-
-
-if __name__ == '__main__':
-    Main()
