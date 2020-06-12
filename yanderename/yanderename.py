@@ -32,7 +32,7 @@ class Main(Wox):
         counter = 0
         for pic in os.listdir():
             name, extend = os.path.splitext(pic)
-            if extend in EXTENDS and any([flag in name for flag in FLAGS]):
+            if extend in EXTENDS and any(flag in name for flag in FLAGS):
                 if 'yande.re' in name:
                     mark = ' ' if ' ' in name else '%'
                     # use yande.re's "id to replace raw name
